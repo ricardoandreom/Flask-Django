@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='/components/login.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="form-container">
+        <h2>Login</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.email.label }} {{ form.email }}
+            </div>
+            <div>
+                {{ form.password.label }} {{ form.password }}
+            </div>
+            <div class="checkbox">
+                {{ form.remember }} {{ form.remember.label }}
+            </div>
+            <div>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
