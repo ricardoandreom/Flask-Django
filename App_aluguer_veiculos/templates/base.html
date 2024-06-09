@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='extends.css') }}">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar">
+        <div class="navbar__content max-width mb-0">
+            <a href="https://tokioschool.pt/">
+                <img src="{{ url_for('static', filename='assets/logo3.png') }}" alt="Facebook" />
+            </a>
+            <!-- Titulo navbar ao lado do logo <span class="navbar-title">Mariana Rent a Car lda</span> -->
+            <ul class="navbar__links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">Sobre nós</a></li>
+                <li><a href="{{ url_for('location') }}">Localização</a></li>
+                <li><a href="{{ url_for('contact') }}">Contacta-nos</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('search') }}">Pesquisa veículos</a></li>
+                    <li><a href="{{ url_for('minhas_reservas') }}">Minhas reservas</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Regista-te</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="footer__content max-width mb-0">
+        <h2 class="tertiary-title mb-s">Precisa de veículo temporariamente?</h2>
+        <p class="mb-m">
+            Estamos aqui para o ajudar a levar onde mais deseja sem preocupações, com o máximo de comodidade
+            e a preços imbatíveis.
+        </p>
+        <div class="footer__contact mb-m">
+          <span class="mb-m">mnanar27@gmail.com</span>
+          <span>+351 914 422 375</span>
+        </div>
+          <ul class="mb-l">
+          <li>
+            <a href="https://www.facebook.com/in/rentcar/"><img src="{{ url_for('static', filename='assets/facebook.svg') }}" alt="Facebook" /></a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/rentcar/"><img src="{{ url_for('static', filename='assets/instagram.svg') }}" alt="Instagram" /></a>
+          </li>
+          </ul>
+        <p class="footer__copyright">
+          © 2023 Mariana Rodrigues. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <!-- script -->
+    <script src="scripts/index.js"></script>
+</body>
+</html>

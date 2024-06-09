@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Pesquisa de veículos{% endblock %}
+{% block content %}
+    <h2>Pesquisa de veículos</h2>
+    <br>
+    <form method="POST" action="{{ url_for('search') }}" class="search-form">
+        <div>
+            <label for="marca">Marca:</label>
+            <select id="marca" name="marca">
+                <option value="">-- Select Marca --</option>
+                {% for marca in marcas %}
+                    <option value="{{ marca }}">{{ marca }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="modelo">Modelo:</label>
+            <select id="modelo" name="modelo">
+                <option value="">-- Select Modelo --</option>
+                {% for modelo in modelos %}
+                    <option value="{{ modelo }}">{{ modelo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="categoria">Categoria:</label>
+            <select id="categoria" name="categoria">
+                <option value="">-- Select Categoria --</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria }}">{{ categoria }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo">
+                <option value="">-- Select Tipo --</option>
+                {% for tipo in tipos %}
+                    <option value="{{ tipo }}">{{ tipo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="valor_diaria">Valor da Diária (até):</label>
+            <input type="number" id="valor_diaria" name="valor_diaria">
+        </div>
+        <div>
+            <label for="capacidade">Capacidade (mínimo):</label>
+            <input type="number" id="capacidade" name="capacidade">
+        </div>
+        <div>
+            <button type="submit">Pesquisar</button>
+        </div>
+    </form>
+
+    {% if vehicles %}
+        <h2>Veículos Disponíveis</h2>
+        <div class="table-wrapper">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Categoria</th>
+                        <th>Tipo</th>
+                        <th>Valor da diária</th>
+                        <th>Capacidade</th>
+                        <th>Data da última revisão</th>
+                        <th>Data da próxima revisão</th>
+                        <th>Data da última inspeção</th>
+                        <th>Transmissão</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehicle in vehicles %}
+                        {% if vehicle.disponivel == "Sim" %}
+                            <tr>
+                                <td>{{ vehicle.marca }}</td>
+                                <td>{{ vehicle.modelo }}</td>
+                                <td>{{ vehicle.categoria }}</td>
+                                <td>{{ vehicle.tipo }}</td>
+                                <td>{{ vehicle.valor_diaria }}</td>
+                                <td>{{ vehicle.capacidade }}</td>
+                                <td>{{ vehicle.data_ultima_revisao }}</td>
+                                <td>{{ vehicle.data_proxima_revisao }}</td>
+                                <td>{{ vehicle.data_ultima_inspecao }}</td>
+                                <td>{{ vehicle.transmissao }}</td>
+                                <td>
+                                    <form action="{{ url_for('reserve', vehicle_id=vehicle.id) }}" method="get">
+                                        <button type="submit">Reservar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Nenhum veículo disponível.</p>
+    {% endif %}
+{% endblock %}

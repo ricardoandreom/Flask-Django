@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Minhas Reservas{% endblock %}
+{% block content %}
+    <h2>Minhas Reservas</h2>
+    <br>
+    {% if reservas %}
+        <div class="table-wrapper">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Data de Início</th>
+                        <th>Data de Fim</th>
+                        <th>Data da Reserva</th>
+                        <th>Forma de Pagamento</th>
+                        <th>Contacto</th>
+                        <th>Morada</th>
+                        <th>Valor da Reserva</th>
+                        <th>Veículo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                        <tr>
+                            <td>{{ reserva.id }}</td>
+                            <td>{{ reserva.data_inicio }}</td>
+                            <td>{{ reserva.data_fim }}</td>
+                            <td>{{ reserva.data_reserva }}</td>
+                            <td>{{ reserva.forma_pagamento }}</td>
+                            <td>{{ reserva.contacto }}</td>
+                            <td>{{ reserva.morada }}</td>
+                            <td>{{ reserva.valor|float|round(2) }}</td>
+                            <td>{{ reserva.veiculo_id }}</td>
+                            <td>
+                                <form action="{{ url_for('cancelar_reserva', reserva_id=reserva.id) }}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger btn-block">Cancelar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Não tem nenhuma reserva.</p>
+    {% endif %}
+{% endblock %}

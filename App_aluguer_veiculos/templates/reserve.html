@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Reserva de Veículo{% endblock %}
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='components/reserve.css') }}">
+
+    <div class="form-container">
+        <h2>Reserva de Veículo - {{ vehicle.marca }} {{ vehicle.modelo }}</h2>
+        <form id="reservation-form" method="POST" action="{{ url_for('reserve', vehicle_id=vehicle.id) }}">
+            <div class="date-container">
+                <div>
+                    <label for="data_inicio">Data de Início:</label>
+                    <input type="date" id="data_inicio" name="data_inicio" required>
+                </div>
+                <div>
+                    <label for="data_fim">Data de Fim:</label>
+                    <input type="date" id="data_fim" name="data_fim" required>
+                </div>
+            </div>
+            <div>
+                <label for="contacto">Contacto:</label>
+                <input type="text" id="contacto" name="contacto" required>
+            </div>
+            <div>
+                <label for="morada">Morada:</label>
+                <input type="text" id="morada" name="morada" required>
+            </div>
+            <div class="payment-container">
+                <label for="forma_pagamento">Forma de Pagamento:</label>
+                <select id="forma_pagamento" name="forma_pagamento" required>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Cartão de Débito">Cartão de Débito</option>
+                    <option value="Paypal">Paypal</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit">Concluir Reserva</button>
+            </div>
+        </form>
+        <div id="valor-reserva">Valor da Reserva: € 0.00</div>
+    </div>
+
+    <script>
+        // Função para calcular e exibir o valor da reserva
+        function calcularValorReserva() {
+            var dataInicio = new Date(document.getElementById('data_inicio').value);
+            var dataFim = new Date(document.getElementById('data_fim').value);
+            var valorDiaria = {{ vehicle.valor_diaria }}; // Valor da diária do veículo (vindo do backend)
+
+            // Verificar se as datas foram selecionadas
+            if (!isNaN(dataInicio.getTime()) && !isNaN(dataFim.getTime())) {
+                // Calcular a diferença em milissegundos entre as datas de início e fim
+                var diferencaTempo = dataFim.getTime() - dataInicio.getTime();
+                // Converter a diferença em dias
+                var diferencaDias = diferencaTempo / (1000 * 3600 * 24);
+
+                // Calcular o valor total da reserva
+                var valorTotal = valorDiaria * diferencaDias;
+
+                // Exibir o valor total da reserva
+                document.getElementById('valor-reserva').innerText = 'Valor da Reserva: € ' + valorTotal.toFixed(2);
+            }
+        }
+
+        // Adicionar um listener para o evento 'change' nos inputs de data
+        document.getElementById('data_inicio').addEventListener('change', calcularValorReserva);
+        document.getElementById('data_fim').addEventListener('change', calcularValorReserva);
+
+        // Chamar a função inicialmente para exibir o valor da reserva com as datas padrão
+        calcularValorReserva();
+    </script>
+{% endblock %}

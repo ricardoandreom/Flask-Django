@@ -1,0 +1,91 @@
+/* reserve.css */
+
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.form-container div {
+    margin-bottom: 1.5em;
+}
+
+.form-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.form-container input,
+.form-container select,
+.form-container button {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container button:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-container button {
+    background-color: var(--primary-color); /* Cor original do botão */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: var(--gray); /* Cor quando o cursor está sobre o botão */
+}
+
+/* Adicionando estilo para o container de data */
+.form-container .date-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-container .date-container div {
+    width: 48%;
+}
+
+.form-container .payment-container {
+    margin-top: 1.5em;
+}
+
+/* Estilo para mensagens de erro */
+.form-container .error {
+    color: red;
+    font-size: 0.875em;
+    margin-top: -1em;
+    margin-bottom: 1em;
+}
+
+/* Estilo para responsividade */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 1.5em;
+    }
+
+    .form-container h2 {
+        font-size: 2rem;
+    }
+}

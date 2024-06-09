@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+    <br>
+    <div class="form-container">
+        <h2>Contacte-nos</h2>
+        <h4>Não hesite em contactar-nos e esclarecer todas as dúvidas que possa ter em relação aos nossos serviços.</h4>
+        <br>
+        <form method="POST" action="{{ url_for('contact') }}">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.name.label }} {{ form.name }}
+            </div>
+            <div>
+                {{ form.subject.label }} {{ form.subject }}
+            </div>
+            <div>
+                {{ form.email.label }} {{ form.email }}
+            </div>
+            <div>
+                {{ form.phone.label }} {{ form.phone }}
+            </div>
+            <div>
+                {{ form.message.label }} {{ form.message }}
+            </div>
+            <div>
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
